@@ -26,6 +26,8 @@ export class App {
       this.app.route('/api', route.controller)
     })
 
+    this.app.get('/ping', (c) => c.text('pong'))
+    this.app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
     this.app.route('/', Home)
   }
 
