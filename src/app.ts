@@ -26,8 +26,16 @@ export class App {
       this.app.route('/api', route.controller)
     })
 
-    this.app.get('/ping', (c) => c.text('pong'))
-    this.app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
+    this.app.get('/ping', (c) => {
+      const userAgent = c.req.header('user-agent') || 'Unknown'
+      console.info(`[${new Date().toISOString()}] /ping request received from: ${userAgent}`)
+      return c.text('pong')
+    })
+    this.app.get('/health', (c) => {
+      const userAgent = c.req.header('user-agent') || 'Unknown'
+      console.info(`[${new Date().toISOString()}] /health request received from: ${userAgent}`)
+      return c.json({ status: 'ok', timestamp: new Date().toISOString() })
+    })
     this.app.route('/', Home)
   }
 
